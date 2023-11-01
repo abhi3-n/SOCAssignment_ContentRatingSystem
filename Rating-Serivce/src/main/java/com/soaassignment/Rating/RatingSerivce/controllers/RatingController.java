@@ -23,7 +23,7 @@ public class RatingController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Rating>> getRatings(){
+    public ResponseEntity<List<RatingFormat>> getRatings(){
         return ResponseEntity.ok(ratingService.getRatings());
     }
 

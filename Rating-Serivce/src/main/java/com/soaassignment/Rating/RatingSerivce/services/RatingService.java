@@ -10,7 +10,7 @@ public interface RatingService {
     //create
     Rating create(Rating rating);
     //get all rating
-    List<Rating> getRatings();
+    List<RatingFormat> getRatings();
 
 
     //get all by UserId

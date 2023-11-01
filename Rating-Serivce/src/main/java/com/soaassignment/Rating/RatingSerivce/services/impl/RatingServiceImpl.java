@@ -29,8 +29,29 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
-    public List<Rating> getRatings() {
-        return ratingRepository.findAll();
+//    public List<Rating> getRatings() {
+//        return ratingRepository.findAll();
+//    }
+    public List<RatingFormat> getRatings(){
+        List<Rating> ratings = ratingRepository.findAll();
+
+        List<RatingFormat> ratingFormats = new ArrayList<>();
+        for (Rating rating : ratings) {
+            RatingFormat ratingFormat = new RatingFormat();
+            System.out.println("content id - "+rating.getContentid());
+            String contentName = restTemplate.getForObject("http://CONTENT-SERVICE/content/name/" + rating.getContentid(), String.class);
+            ratingFormat.setContentName(contentName);
+
+            String userId = rating.getUserid();
+            String userName = restTemplate.getForObject("http://USER-SERVICE/users/name/" + userId, String.class);
+            ratingFormat.setUserName(userName);
+
+            ratingFormat.setRating(rating.getRating());
+            ratingFormat.setFeedback(rating.getFeedback());
+
+            ratingFormats.add(ratingFormat);
+        }
+        return ratingFormats;
     }
 
     @Override
